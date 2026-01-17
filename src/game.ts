@@ -1,4 +1,5 @@
 import type { GameConfig, Position } from "./types";
+import { WIN_HERD_SIZE } from "./types";
 import { Renderer } from "./renderer";
 import { InputHandler } from "./input";
 import { Herd } from "./horse";
@@ -18,6 +19,7 @@ export class Game {
   private config: GameConfig;
   private tickRate: number;
   private onStateChange: ((state: GameState) => void) | null = null;
+  private onWin: (() => void) | null = null;
 
   constructor(container: HTMLElement, config: GameConfig, tickRate: number = 150) {
     this.config = config;
@@ -34,6 +36,10 @@ export class Game {
 
   setOnStateChange(callback: (state: GameState) => void): void {
     this.onStateChange = callback;
+  }
+
+  setOnWin(callback: () => void): void {
+    this.onWin = callback;
   }
 
   start(): void {
@@ -92,6 +98,12 @@ export class Game {
       this.render();
       if (willEatApple) {
         this.notifyStateChange();
+        if (this.herd.size() >= WIN_HERD_SIZE) {
+          this.stop();
+          if (this.onWin) {
+            this.onWin();
+          }
+        }
       }
     }
   }

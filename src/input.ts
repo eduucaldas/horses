@@ -25,8 +25,11 @@ export class InputHandler {
 
   private handleKeyDown(event: KeyboardEvent): void {
     const direction = this.keyToDirection(event.key);
-    if (direction && !this.isOpposite(direction, this.currentDirection)) {
-      this.nextDirection = direction;
+    if (direction) {
+      event.preventDefault();
+      if (!this.isOpposite(direction, this.currentDirection)) {
+        this.nextDirection = direction;
+      }
     }
   }
 

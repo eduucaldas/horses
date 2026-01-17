@@ -14,3 +14,5 @@ export const DEFAULT_CONFIG: GameConfig = {
   gridHeight: 15,
   cellSize: 32,
 };
+
+export const WIN_HERD_SIZE = 10;
