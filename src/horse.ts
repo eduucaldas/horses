@@ -20,6 +20,10 @@ export class Herd {
     return this.positions.length;
   }
 
+  peekNextHead(direction: Direction): Position {
+    return this.getNextPosition(this.positions[0], direction);
+  }
+
   move(direction: Direction, config: GameConfig): boolean {
     const head = this.positions[0];
     const newHead = this.getNextPosition(head, direction);

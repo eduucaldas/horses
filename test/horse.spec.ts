@@ -3,6 +3,27 @@ import { Herd } from "../src/horse";
 import { DEFAULT_CONFIG } from "../src/types";
 
 describe("Herd", () => {
+  describe("peekNextHead", () => {
+    it("returns next position without moving", () => {
+      const herd = new Herd({ x: 5, y: 5 });
+
+      const next = herd.peekNextHead("right");
+      expect(next).toEqual({ x: 6, y: 5 });
+
+      // Head should not have moved
+      expect(herd.getHead()).toEqual({ x: 5, y: 5 });
+    });
+
+    it("returns correct position for all directions", () => {
+      const herd = new Herd({ x: 5, y: 5 });
+
+      expect(herd.peekNextHead("up")).toEqual({ x: 5, y: 4 });
+      expect(herd.peekNextHead("down")).toEqual({ x: 5, y: 6 });
+      expect(herd.peekNextHead("left")).toEqual({ x: 4, y: 5 });
+      expect(herd.peekNextHead("right")).toEqual({ x: 6, y: 5 });
+    });
+  });
+
   it("starts with one horse at the given position", () => {
     const herd = new Herd({ x: 5, y: 5 });
     expect(herd.size()).toBe(1);

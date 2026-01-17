@@ -3,6 +3,11 @@ import { Renderer } from "./renderer";
 import { InputHandler } from "./input";
 import { Herd } from "./horse";
 
+export type GameState = {
+  herdSize: number;
+  isRunning: boolean;
+};
+
 export class Game {
   private renderer: Renderer;
   private input: InputHandler;
@@ -12,6 +17,7 @@ export class Game {
   private isRunning = false;
   private config: GameConfig;
   private tickRate: number;
+  private onStateChange: ((state: GameState) => void) | null = null;
 
   constructor(container: HTMLElement, config: GameConfig, tickRate: number = 150) {
     this.config = config;
@@ -26,16 +32,30 @@ export class Game {
     this.applePosition = this.spawnApple();
   }
 
+  setOnStateChange(callback: (state: GameState) => void): void {
+    this.onStateChange = callback;
+  }
+
   start(): void {
     if (this.isRunning) return;
 
     this.isRunning = true;
     this.input.start();
     this.render();
+    this.notifyStateChange();
 
     this.tickInterval = window.setInterval(() => {
       this.tick();
     }, this.tickRate);
+  }
+
+  private notifyStateChange(): void {
+    if (this.onStateChange) {
+      this.onStateChange({
+        herdSize: this.herd.size(),
+        isRunning: this.isRunning,
+      });
+    }
   }
 
   stop(): void {
@@ -54,12 +74,12 @@ export class Game {
     const direction = this.input.getDirection();
     if (!direction) return;
 
-    const head = this.herd.getHead();
-    const atApple =
-      head.x === this.applePosition.x && head.y === this.applePosition.y;
+    const nextHead = this.herd.peekNextHead(direction);
+    const willEatApple =
+      nextHead.x === this.applePosition.x && nextHead.y === this.applePosition.y;
 
     let moved: boolean;
-    if (atApple) {
+    if (willEatApple) {
       moved = this.herd.grow(direction, this.config);
       if (moved) {
         this.applePosition = this.spawnApple();
@@ -70,6 +90,9 @@ export class Game {
 
     if (moved) {
       this.render();
+      if (willEatApple) {
+        this.notifyStateChange();
+      }
     }
   }
 

@@ -12,6 +12,12 @@ title.className = "text-3xl font-bold text-white";
 title.textContent = "Horses";
 app.appendChild(title);
 
+// Herd size display
+const herdDisplay = document.createElement("p");
+herdDisplay.className = "text-xl text-white";
+herdDisplay.textContent = "Herd: 1 / 10";
+app.appendChild(herdDisplay);
+
 // Instructions
 const instructions = document.createElement("p");
 instructions.className = "text-gray-400 text-sm";
@@ -24,4 +30,9 @@ app.appendChild(gameContainer);
 
 // Start game
 const game = new Game(gameContainer, DEFAULT_CONFIG);
+
+game.setOnStateChange((state) => {
+  herdDisplay.textContent = `Herd: ${state.herdSize} / 10`;
+});
+
 game.start();
