@@ -74,4 +74,44 @@ describe("InputHandler", () => {
     pressKey("Enter");
     expect(input.getDirection()).toBeNull();
   });
+
+  describe("swipe controls", () => {
+    function swipe(startX: number, startY: number, endX: number, endY: number): void {
+      window.dispatchEvent(
+        new TouchEvent("touchstart", {
+          touches: [{ clientX: startX, clientY: startY } as Touch],
+        })
+      );
+      window.dispatchEvent(
+        new TouchEvent("touchend", {
+          changedTouches: [{ clientX: endX, clientY: endY } as Touch],
+        })
+      );
+    }
+
+    it("detects swipe right", () => {
+      swipe(0, 0, 50, 0);
+      expect(input.getDirection()).toBe("right");
+    });
+
+    it("detects swipe left", () => {
+      swipe(50, 0, 0, 0);
+      expect(input.getDirection()).toBe("left");
+    });
+
+    it("detects swipe down", () => {
+      swipe(0, 0, 0, 50);
+      expect(input.getDirection()).toBe("down");
+    });
+
+    it("detects swipe up", () => {
+      swipe(0, 50, 0, 0);
+      expect(input.getDirection()).toBe("up");
+    });
+
+    it("ignores small movements", () => {
+      swipe(0, 0, 10, 10);
+      expect(input.getDirection()).toBeNull();
+    });
+  });
 });

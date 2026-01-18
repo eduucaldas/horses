@@ -1,19 +1,29 @@
 export type Direction = "up" | "down" | "left" | "right";
 
+const SWIPE_THRESHOLD = 30; // minimum pixels for a swipe
+
 export class InputHandler {
   private currentDirection: Direction | null = null;
   private nextDirection: Direction | null = null;
+  private touchStartX: number | null = null;
+  private touchStartY: number | null = null;
 
   constructor() {
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
   }
 
   start(): void {
     window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("touchstart", this.handleTouchStart);
+    window.addEventListener("touchend", this.handleTouchEnd);
   }
 
   stop(): void {
     window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("touchstart", this.handleTouchStart);
+    window.removeEventListener("touchend", this.handleTouchEnd);
   }
 
   getDirection(): Direction | null {
@@ -64,5 +74,42 @@ export class InputHandler {
       (a === "left" && b === "right") ||
       (a === "right" && b === "left")
     );
+  }
+
+  private handleTouchStart(event: TouchEvent): void {
+    const touch = event.touches[0];
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+  }
+
+  private handleTouchEnd(event: TouchEvent): void {
+    if (this.touchStartX === null || this.touchStartY === null) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - this.touchStartX;
+    const deltaY = touch.clientY - this.touchStartY;
+
+    this.touchStartX = null;
+    this.touchStartY = null;
+
+    const direction = this.swipeToDirection(deltaX, deltaY);
+    if (direction && !this.isOpposite(direction, this.currentDirection)) {
+      this.nextDirection = direction;
+    }
+  }
+
+  private swipeToDirection(deltaX: number, deltaY: number): Direction | null {
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    if (absX < SWIPE_THRESHOLD && absY < SWIPE_THRESHOLD) {
+      return null; // too small to be a swipe
+    }
+
+    if (absX > absY) {
+      return deltaX > 0 ? "right" : "left";
+    } else {
+      return deltaY > 0 ? "down" : "up";
+    }
   }
 }

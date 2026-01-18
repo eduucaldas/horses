@@ -26,7 +26,7 @@ gameScreen.appendChild(herdDisplay);
 // Instructions
 const instructions = document.createElement("p");
 instructions.className = "text-gray-400 text-sm";
-instructions.textContent = "Use arrow keys or WASD to move";
+instructions.textContent = "Use arrow keys, WASD, or swipe to move";
 gameScreen.appendChild(instructions);
 
 // Game container
