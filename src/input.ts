@@ -11,18 +11,21 @@ export class InputHandler {
   constructor() {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
   }
 
   start(): void {
     window.addEventListener("keydown", this.handleKeyDown);
-    window.addEventListener("touchstart", this.handleTouchStart);
+    window.addEventListener("touchstart", this.handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", this.handleTouchMove, { passive: false });
     window.addEventListener("touchend", this.handleTouchEnd);
   }
 
   stop(): void {
     window.removeEventListener("keydown", this.handleKeyDown);
     window.removeEventListener("touchstart", this.handleTouchStart);
+    window.removeEventListener("touchmove", this.handleTouchMove);
     window.removeEventListener("touchend", this.handleTouchEnd);
   }
 
@@ -77,9 +80,15 @@ export class InputHandler {
   }
 
   private handleTouchStart(event: TouchEvent): void {
+    event.preventDefault();
     const touch = event.touches[0];
     this.touchStartX = touch.clientX;
     this.touchStartY = touch.clientY;
+  }
+
+  private handleTouchMove(event: TouchEvent): void {
+    // Prevent scrolling while swiping
+    event.preventDefault();
   }
 
   private handleTouchEnd(event: TouchEvent): void {
