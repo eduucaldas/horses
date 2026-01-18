@@ -113,5 +113,25 @@ describe("InputHandler", () => {
       swipe(0, 0, 10, 10);
       expect(input.getDirection()).toBeNull();
     });
+
+    it("detects diagonal swipe as down when vertical is dominant", () => {
+      swipe(0, 0, 30, 40);
+      expect(input.getDirection()).toBe("down");
+    });
+
+    it("detects diagonal swipe as right when horizontal is dominant", () => {
+      swipe(0, 0, 50, 30);
+      expect(input.getDirection()).toBe("right");
+    });
+
+    it("detects diagonal swipe as up-left correctly", () => {
+      swipe(50, 60, 10, 0);
+      expect(input.getDirection()).toBe("up"); // vertical (60) > horizontal (40)
+    });
+
+    it("detects diagonal swipe as left when horizontal is dominant", () => {
+      swipe(100, 50, 0, 30);
+      expect(input.getDirection()).toBe("left"); // horizontal (100) > vertical (20)
+    });
   });
 });
