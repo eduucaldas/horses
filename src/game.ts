@@ -209,6 +209,7 @@ export class Game {
 
     if (moved) {
       this.lastDirection = direction;
+      this.input.setCurrentDirection(direction);
       this.render();
       if (willEatApple) {
         this.notifyStateChange();

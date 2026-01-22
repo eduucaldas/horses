@@ -34,6 +34,10 @@ export class InputHandler {
     this.invertedControls = inverted;
   }
 
+  setCurrentDirection(direction: Direction): void {
+    this.currentDirection = direction;
+  }
+
   getDirection(): Direction | null {
     const direction = this.nextDirection ?? this.currentDirection;
     this.currentDirection = direction;
