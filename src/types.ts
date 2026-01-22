@@ -1,3 +1,5 @@
+import { NARRATOR_SCRIPT } from "./narrator";
+
 export interface Position {
   x: number;
   y: number;
@@ -15,4 +17,5 @@ export const DEFAULT_CONFIG: GameConfig = {
   cellSize: 32,
 };
 
-export const WIN_HERD_SIZE = 10;
+// Win after eating all apples (one per narrator line) + starting horse
+export const WIN_HERD_SIZE = NARRATOR_SCRIPT.length + 1;

@@ -7,6 +7,7 @@ export class InputHandler {
   private nextDirection: Direction | null = null;
   private touchStartX: number | null = null;
   private touchStartY: number | null = null;
+  private invertedControls = false;
 
   constructor() {
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -29,6 +30,10 @@ export class InputHandler {
     window.removeEventListener("touchend", this.handleTouchEnd);
   }
 
+  setInvertedControls(inverted: boolean): void {
+    this.invertedControls = inverted;
+  }
+
   getDirection(): Direction | null {
     const direction = this.nextDirection ?? this.currentDirection;
     this.currentDirection = direction;
@@ -37,12 +42,24 @@ export class InputHandler {
   }
 
   private handleKeyDown(event: KeyboardEvent): void {
-    const direction = this.keyToDirection(event.key);
+    let direction = this.keyToDirection(event.key);
     if (direction) {
       event.preventDefault();
+      if (this.invertedControls) {
+        direction = this.invertDirection(direction);
+      }
       if (!this.isOpposite(direction, this.currentDirection)) {
         this.nextDirection = direction;
       }
+    }
+  }
+
+  private invertDirection(direction: Direction): Direction {
+    switch (direction) {
+      case "up": return "down";
+      case "down": return "up";
+      case "left": return "right";
+      case "right": return "left";
     }
   }
 
@@ -101,9 +118,14 @@ export class InputHandler {
     this.touchStartX = null;
     this.touchStartY = null;
 
-    const direction = this.swipeToDirection(deltaX, deltaY);
-    if (direction && !this.isOpposite(direction, this.currentDirection)) {
-      this.nextDirection = direction;
+    let direction = this.swipeToDirection(deltaX, deltaY);
+    if (direction) {
+      if (this.invertedControls) {
+        direction = this.invertDirection(direction);
+      }
+      if (!this.isOpposite(direction, this.currentDirection)) {
+        this.nextDirection = direction;
+      }
     }
   }
 

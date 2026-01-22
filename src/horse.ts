@@ -24,11 +24,13 @@ export class Herd {
     return this.getNextPosition(this.positions[0], direction);
   }
 
-  move(direction: Direction, config: GameConfig): boolean {
+  move(direction: Direction, config: GameConfig, wrapWalls = false): boolean {
     const head = this.positions[0];
-    const newHead = this.getNextPosition(head, direction);
+    let newHead = this.getNextPosition(head, direction);
 
-    if (!this.isValidPosition(newHead, config)) {
+    if (wrapWalls) {
+      newHead = this.wrapPosition(newHead, config);
+    } else if (!this.isValidPosition(newHead, config)) {
       return false;
     }
 
@@ -38,17 +40,26 @@ export class Herd {
     return true;
   }
 
-  grow(direction: Direction, config: GameConfig): boolean {
+  grow(direction: Direction, config: GameConfig, wrapWalls = false): boolean {
     const head = this.positions[0];
-    const newHead = this.getNextPosition(head, direction);
+    let newHead = this.getNextPosition(head, direction);
 
-    if (!this.isValidPosition(newHead, config)) {
+    if (wrapWalls) {
+      newHead = this.wrapPosition(newHead, config);
+    } else if (!this.isValidPosition(newHead, config)) {
       return false;
     }
 
     // Grow: add new head, keep tail
     this.positions.unshift(newHead);
     return true;
+  }
+
+  private wrapPosition(position: Position, config: GameConfig): Position {
+    return {
+      x: (position.x + config.gridWidth) % config.gridWidth,
+      y: (position.y + config.gridHeight) % config.gridHeight,
+    };
   }
 
   private getNextPosition(current: Position, direction: Direction): Position {
