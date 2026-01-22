@@ -29,6 +29,7 @@ export class Game {
   private appleEmoji = "🍎";
   private wrapWalls = false;
   private waitingForWallHit = false;
+  private lastDirection: "up" | "down" | "left" | "right" | null = null;
 
   constructor(container: HTMLElement, config: GameConfig, tickRate: number = 150) {
     this.config = config;
@@ -166,6 +167,14 @@ export class Game {
     const direction = this.input.getDirection();
     if (!direction) return;
 
+    // Try the requested direction first, fall back to last direction if it fails
+    let moved = this.tryMove(direction);
+    if (!moved && this.lastDirection && this.lastDirection !== direction) {
+      moved = this.tryMove(this.lastDirection);
+    }
+  }
+
+  private tryMove(direction: "up" | "down" | "left" | "right"): boolean {
     const nextHead = this.herd.peekNextHead(direction);
 
     // Check if hitting a wall (before wrapping)
@@ -199,6 +208,7 @@ export class Game {
     }
 
     if (moved) {
+      this.lastDirection = direction;
       this.render();
       if (willEatApple) {
         this.notifyStateChange();
@@ -213,6 +223,8 @@ export class Game {
         }
       }
     }
+
+    return moved;
   }
 
   private isOutOfBounds(position: Position): boolean {
