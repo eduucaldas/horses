@@ -3,6 +3,7 @@ import type { Direction } from "./input";
 
 export class Herd {
   private positions: Position[];
+  private headDirection: Direction = "right";
 
   constructor(startPosition: Position) {
     this.positions = [{ ...startPosition }];
@@ -10,6 +11,37 @@ export class Herd {
 
   getPositions(): Position[] {
     return this.positions.map((p) => ({ ...p }));
+  }
+
+  getDirections(): Direction[] {
+    const directions: Direction[] = [this.headDirection];
+
+    // For body segments, calculate direction towards the segment in front
+    for (let i = 1; i < this.positions.length; i++) {
+      const current = this.positions[i];
+      const ahead = this.positions[i - 1];
+      directions.push(this.getDirectionBetween(current, ahead));
+    }
+
+    return directions;
+  }
+
+  private getDirectionBetween(from: Position, to: Position): Direction {
+    const dx = to.x - from.x;
+    const dy = to.y - from.y;
+
+    // Handle wrap-around (large jumps mean wrapping)
+    if (Math.abs(dx) > 1) {
+      return dx > 0 ? "left" : "right";
+    }
+    if (Math.abs(dy) > 1) {
+      return dy > 0 ? "up" : "down";
+    }
+
+    if (dx > 0) return "right";
+    if (dx < 0) return "left";
+    if (dy > 0) return "down";
+    return "up";
   }
 
   getHead(): Position {
@@ -37,6 +69,7 @@ export class Herd {
     // Move: add new head, remove tail
     this.positions.unshift(newHead);
     this.positions.pop();
+    this.headDirection = direction;
     return true;
   }
 
@@ -52,6 +85,7 @@ export class Herd {
 
     // Grow: add new head, keep tail
     this.positions.unshift(newHead);
+    this.headDirection = direction;
     return true;
   }
 

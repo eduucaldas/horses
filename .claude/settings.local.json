@@ -4,7 +4,8 @@
       "Bash(source /opt/homebrew/opt/nvm/nvm.sh)",
       "Bash(export NVM_DIR=\"$HOME/.nvm\")",
       "Bash(. \"$NVM_DIR/nvm.sh\")",
-      "Bash(source \"$NVM_DIR/nvm.sh\")"
+      "Bash(source \"$NVM_DIR/nvm.sh\")",
+      "Bash(gh run list:*)"
     ]
   }
 }

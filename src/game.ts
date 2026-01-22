@@ -233,8 +233,9 @@ export class Game {
     }
 
     const positions = this.herd.getPositions();
-    for (const pos of positions) {
-      this.renderer.renderEmoji(pos, "🐴");
+    const directions = this.herd.getDirections();
+    for (let i = 0; i < positions.length; i++) {
+      this.renderer.renderEmoji(positions[i], "🐴", directions[i]);
     }
   }
 

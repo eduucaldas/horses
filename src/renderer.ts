@@ -1,4 +1,5 @@
 import type { Position, GameConfig } from "./types";
+import type { Direction } from "./input";
 
 export class Renderer {
   private grid: HTMLDivElement;
@@ -44,13 +45,32 @@ export class Renderer {
     for (let y = 0; y < this.config.gridHeight; y++) {
       for (let x = 0; x < this.config.gridWidth; x++) {
         this.cells[y][x].textContent = "";
+        this.cells[y][x].style.transform = "";
       }
     }
   }
 
-  renderEmoji(position: Position, emoji: string): void {
+  renderEmoji(position: Position, emoji: string, direction?: Direction): void {
     if (this.isValidPosition(position)) {
-      this.cells[position.y][position.x].textContent = emoji;
+      const cell = this.cells[position.y][position.x];
+      cell.textContent = emoji;
+      if (direction) {
+        cell.style.transform = this.getRotationForDirection(direction);
+      }
+    }
+  }
+
+  private getRotationForDirection(direction: Direction): string {
+    // Horse emoji 🐴 faces left by default
+    switch (direction) {
+      case "left":
+        return "";
+      case "right":
+        return "scaleX(-1)";
+      case "up":
+        return "rotate(90deg)";
+      case "down":
+        return "rotate(-90deg)";
     }
   }
 
