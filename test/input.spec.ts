@@ -53,7 +53,8 @@ describe("InputHandler", () => {
 
   it("ignores opposite direction", () => {
     pressKey("ArrowRight");
-    input.getDirection(); // consume to set current direction
+    input.getDirection();
+    input.setCurrentDirection("right"); // simulate successful move
 
     pressKey("ArrowLeft"); // opposite, should be ignored
     expect(input.getDirection()).toBe("right"); // still right
@@ -62,9 +63,32 @@ describe("InputHandler", () => {
   it("allows perpendicular direction change", () => {
     pressKey("ArrowRight");
     input.getDirection();
+    input.setCurrentDirection("right"); // confirm the move succeeded
 
     pressKey("ArrowUp"); // perpendicular, should be allowed
     expect(input.getDirection()).toBe("up");
+  });
+
+  describe("direction sync with failed moves", () => {
+    it("allows opposite of failed direction when actual direction differs", () => {
+      // Scenario: horse going up, hits corner, user presses right (fails), then left
+      input.setCurrentDirection("up"); // actual direction is up
+
+      pressKey("ArrowRight"); // user tries to go right
+      input.getDirection(); // game gets "right" but move will fail
+      // Note: setCurrentDirection NOT called because move failed
+
+      pressKey("ArrowLeft"); // user now tries left
+      // Left is NOT opposite to actual direction (up), so should be allowed
+      expect(input.getDirection()).toBe("left");
+    });
+
+    it("still blocks true opposite direction", () => {
+      input.setCurrentDirection("up");
+
+      pressKey("ArrowDown"); // opposite of actual direction
+      expect(input.getDirection()).toBe("up"); // blocked, returns current
+    });
   });
 
   it("ignores unrelated keys", () => {

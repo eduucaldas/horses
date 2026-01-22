@@ -40,7 +40,6 @@ export class InputHandler {
 
   getDirection(): Direction | null {
     const direction = this.nextDirection ?? this.currentDirection;
-    this.currentDirection = direction;
     this.nextDirection = null;
     return direction;
   }
