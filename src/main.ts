@@ -50,27 +50,6 @@ const flowersContainer = document.createElement("div");
 flowersContainer.className = "absolute inset-0 pointer-events-none overflow-hidden";
 gameWrapper.appendChild(flowersContainer);
 
-// Victory screen (hidden initially)
-const victoryScreen = document.createElement("div");
-victoryScreen.className = "hidden flex flex-col items-center gap-6 text-center";
-app.appendChild(victoryScreen);
-
-const ringEmoji = document.createElement("div");
-ringEmoji.className = "text-8xl animate-bounce";
-ringEmoji.textContent = "💍";
-victoryScreen.appendChild(ringEmoji);
-
-const proposalMessage = document.createElement("h2");
-proposalMessage.className = "text-4xl font-bold text-white";
-proposalMessage.textContent = "Will you marry me?";
-victoryScreen.appendChild(proposalMessage);
-
-const replayButton = document.createElement("button");
-replayButton.className =
-  "mt-4 px-6 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors";
-replayButton.textContent = "Play Again";
-victoryScreen.appendChild(replayButton);
-
 // Visual effect state
 let zoomLevel = 1;
 
@@ -135,14 +114,6 @@ function fadeToEnd(): void {
   }, 5000);
 }
 
-function resetVisualEffects(): void {
-  gameWrapper.classList.remove("shake");
-  flowersContainer.innerHTML = "";
-  zoomLevel = 1;
-  gameWrapper.style.transform = "";
-  gameWrapper.style.transition = "";
-}
-
 // Game setup
 let game: Game;
 let narrator: Narrator;
@@ -168,22 +139,8 @@ function startGame(): void {
     }
   });
 
-  game.setOnWin(() => {
-    gameScreen.classList.add("hidden");
-    victoryScreen.classList.remove("hidden");
-  });
-
   game.start();
 }
-
-replayButton.addEventListener("click", () => {
-  victoryScreen.classList.add("hidden");
-  gameScreen.classList.remove("hidden");
-  herdDisplay.textContent = `Herd: 1 / ${WIN_HERD_SIZE}`;
-  narratorDisplay.textContent = "";
-  resetVisualEffects();
-  startGame();
-});
 
 // Start initial game
 startGame();
