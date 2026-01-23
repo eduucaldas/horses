@@ -55,7 +55,7 @@ gameWrapper.appendChild(flowersContainer);
 let zoomLevel = 1;
 
 // Audio for the song (use base URL for GitHub Pages compatibility)
-const loviSong = new Audio(`${import.meta.env.BASE_URL}lovi-lovi-song.m4a`);
+const loviSong = new Audio(`${import.meta.env.BASE_URL}lovi-lovi-song.mp4`);
 loviSong.loop = true;
 
 function applyVisualEffect(effect: EffectType): void {
