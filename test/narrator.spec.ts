@@ -85,8 +85,8 @@ describe("Narrator", () => {
   });
 
   describe("NARRATOR_SCRIPT", () => {
-    it("has 19 lines", () => {
-      expect(NARRATOR_SCRIPT.length).toBe(19);
+    it("has 20 lines", () => {
+      expect(NARRATOR_SCRIPT.length).toBe(20);
     });
 
     it("each line has text and effect", () => {

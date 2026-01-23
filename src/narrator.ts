@@ -48,14 +48,15 @@ export const NARRATOR_SCRIPT: NarratorLine[] = [
   },
   { text: "And we see the beauty in all of it!", effect: "add_flowers" },
   {
-    text: "Ok, by now this all might feel endless,",
+    text: "You've been so patient with this silly game...",
     effect: "zoom_out_1",
   },
   {
-    text: "and you may be starting to doubt this game will ever end…",
+    text: "Just like you're patient with me every day...",
     effect: "zoom_out_2",
   },
-  { text: "Doubt comes", effect: "fade_to_end" },
+  { text: "And I know it took me very very long…", effect: "none" },
+  { text: "I just wanted it written in the stars", effect: "fade_to_end" },
 ];
 
 export class Narrator {

@@ -48,13 +48,15 @@ And we need to think outside of the box
 And we see the beauty in all of it!
 (Add little flowers around the screen)
 
-Ok, by now this all might feel endless, 
-(Zoom out, show around the green background I black)
+You've been so patient with this silly game...
+(Zoom out, show around the green background as black)
 
-and you may be starting to doubt this game will ever end…
+Just like you're patient with me every day...
 (Zoom out again)
 
-Doubt comes
+And I know it took me very very long… 
+
+I just wanted it written in the stars
 (Continue zoom out, until everything is black, and there's just a white dot)
 (Wait 5 seconds)
 (Turn screen to black fully, redirect to https://eduucaldas.github.io/pov/)
