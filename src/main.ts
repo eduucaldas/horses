@@ -111,11 +111,14 @@ function applyZoom(): void {
 }
 
 function fadeToEnd(): void {
-  // Create overlay
+  // Bring narrator to front so it stays visible
+  narratorDisplay.classList.add("z-[60]", "relative");
+
+  // Create overlay behind narrator
   const overlay = document.createElement("div");
   overlay.className = "fixed inset-0 bg-black z-50";
   overlay.style.opacity = "0";
-  overlay.style.transition = "opacity 3s ease-out";
+  overlay.style.transition = "opacity 2s ease-out";
   document.body.appendChild(overlay);
 
   // Start fade
@@ -126,7 +129,7 @@ function fadeToEnd(): void {
   // After fade completes, redirect
   setTimeout(() => {
     window.location.href = "https://eduucaldas.github.io/pov/";
-  }, 5000);
+  }, 4000);
 }
 
 // Game setup

@@ -57,7 +57,6 @@ Just like you're patient with me every day...
 And I know it took me very very long… 
 
 I just wanted it written in the stars
-(Continue zoom out, until everything is black, and there's just a white dot)
-(Wait 5 seconds)
-(Turn screen to black fully, redirect to https://eduucaldas.github.io/pov/)
+(Gradually fade the screen to black in 2 seconds, keeping only the narrator phrase
+and then redirect to https://eduucaldas.github.io/pov/)
 
