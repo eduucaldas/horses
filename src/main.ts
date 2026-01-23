@@ -129,7 +129,7 @@ function fadeToEnd(): void {
   // After fade completes, redirect
   setTimeout(() => {
     window.location.href = "https://eduucaldas.github.io/pov/";
-  }, 4000);
+  }, 2000);
 }
 
 // Game setup
