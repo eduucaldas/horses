@@ -67,6 +67,7 @@ export class Game {
 
     switch (effect) {
       case "invert_controls":
+      case "stop_song_invert":
         this.input.setInvertedControls(true);
         break;
       case "normal_controls":

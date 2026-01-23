@@ -2,6 +2,7 @@ export type EffectType =
   | "none"
   | "play_song"
   | "stop_song"
+  | "stop_song_invert"
   | "invert_controls"
   | "normal_controls"
   | "speed_2x"
@@ -29,8 +30,8 @@ export const NARRATOR_SCRIPT: NarratorLine[] = [
     effect: "none",
   },
   { text: "That's why I sing (make sure you can listen to me!)", effect: "play_song" },
-  { text: "I know, I know, it's not all smooth sailing", effect: "stop_song" },
-  { text: "Sometimes it's confusing", effect: "invert_controls" },
+  { text: "I know, I know, it's not all smooth sailing", effect: "none" },
+  { text: "Sometimes it's confusing", effect: "stop_song_invert" },
   {
     text: "But suddenly you get used to the quirks of the other, and it feels all natural again...",
     effect: "normal_controls",

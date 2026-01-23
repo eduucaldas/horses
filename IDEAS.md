@@ -14,9 +14,9 @@ That’s why I sing (make sure you can listen to me!)
 (start playing lovi-lovi-song.m4a)
 
 I know, I know, it’s not all smooth sailing
-(stop song)
 
 Sometimes it's confusing
+(stop song)
 (Revert controls)
 
 But suddenly you get used to the quirks of the other, and it feels all natural again...

@@ -69,6 +69,7 @@ function applyVisualEffect(effect: EffectType): void {
       });
       break;
     case "stop_song":
+    case "stop_song_invert":
       loviSong.pause();
       loviSong.currentTime = 0;
       break;
