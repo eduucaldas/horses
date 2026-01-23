@@ -54,11 +54,25 @@ gameWrapper.appendChild(flowersContainer);
 // Visual effect state
 let zoomLevel = 1;
 
+// Audio for the song
+const loviSong = new Audio("lovi-lovi-song.m4a");
+loviSong.loop = true;
+
 function applyVisualEffect(effect: EffectType): void {
   // Stop any ongoing shake
   gameWrapper.classList.remove("shake");
 
   switch (effect) {
+    case "play_song":
+      loviSong.play().catch(() => {
+        // Autoplay may be blocked, that's ok
+        console.log("Audio autoplay blocked - user interaction required");
+      });
+      break;
+    case "stop_song":
+      loviSong.pause();
+      loviSong.currentTime = 0;
+      break;
     case "screen_shake":
       gameWrapper.classList.add("shake");
       break;

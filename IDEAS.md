@@ -4,6 +4,17 @@ Narrator lines come with what they will say and then in between parenthesis the 
 
 Please implement each of them one by one. Feel free to increase the total number of apples in the game. notice that the end of the game is another now, 
 
+Oh, hello there!
+
+This is your Lovi Lovi here
+
+You know, our relationship is one of the most beautiful things in my life
+
+That’s why I sing (make sure you can listen to me!)
+(start playing lovi-lovi-song.m4a)
+
+I know, I know, it’s not all smooth sailing
+(stop song)
 
 Sometimes it's confusing
 (Revert controls)

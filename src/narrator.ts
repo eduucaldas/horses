@@ -1,5 +1,7 @@
 export type EffectType =
   | "none"
+  | "play_song"
+  | "stop_song"
   | "invert_controls"
   | "normal_controls"
   | "speed_2x"
@@ -20,6 +22,14 @@ export interface NarratorLine {
 }
 
 export const NARRATOR_SCRIPT: NarratorLine[] = [
+  { text: "Oh, hello there!", effect: "none" },
+  { text: "This is your Lovi Lovi here", effect: "none" },
+  {
+    text: "You know, our relationship is one of the most beautiful things in my life",
+    effect: "none",
+  },
+  { text: "That's why I sing (make sure you can listen to me!)", effect: "play_song" },
+  { text: "I know, I know, it's not all smooth sailing", effect: "stop_song" },
   { text: "Sometimes it's confusing", effect: "invert_controls" },
   {
     text: "But suddenly you get used to the quirks of the other, and it feels all natural again...",
