@@ -16,7 +16,7 @@ export class Renderer {
 
   private createGrid(): HTMLDivElement {
     const grid = document.createElement("div");
-    grid.className = "grid gap-0 bg-green-800 p-2 rounded-lg scale-50 sm:scale-75 md:scale-100 origin-top";
+    grid.className = "grid gap-0 bg-green-800 p-2 rounded-lg scale-75 sm:scale-90 md:scale-100 origin-top";
     grid.style.gridTemplateColumns = `repeat(${this.config.gridWidth}, ${this.config.cellSize}px)`;
     grid.style.gridTemplateRows = `repeat(${this.config.gridHeight}, ${this.config.cellSize}px)`;
     grid.style.display = "grid";

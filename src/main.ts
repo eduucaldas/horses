@@ -25,15 +25,16 @@ herdDisplay.className = "text-xl text-white";
 herdDisplay.textContent = `Herd: 1 / ${WIN_HERD_SIZE}`;
 gameScreen.appendChild(herdDisplay);
 
-// Instructions
+// Instructions - show mobile-friendly text on touch devices
 const instructions = document.createElement("p");
 instructions.className = "text-gray-400 text-sm";
-instructions.textContent = "Use arrow keys, WASD, or swipe to move";
+const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+instructions.textContent = isTouchDevice ? "Swipe to move" : "Use arrow keys or WASD to move";
 gameScreen.appendChild(instructions);
 
 // Narrator display
 const narratorDisplay = document.createElement("p");
-narratorDisplay.className = "text-yellow-300 text-lg italic min-h-8 text-center max-w-md";
+narratorDisplay.className = "text-yellow-300 text-lg italic min-h-8 text-center px-4 max-w-full sm:max-w-md";
 narratorDisplay.textContent = "";
 gameScreen.appendChild(narratorDisplay);
 
