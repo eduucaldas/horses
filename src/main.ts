@@ -34,7 +34,7 @@ gameScreen.appendChild(instructions);
 
 // Narrator display
 const narratorDisplay = document.createElement("p");
-narratorDisplay.className = "text-yellow-300 text-lg italic min-h-8 text-center px-4 max-w-full sm:max-w-md";
+narratorDisplay.className = "text-yellow-300 text-lg italic min-h-14 text-center px-4 max-w-full sm:max-w-md";
 narratorDisplay.textContent = "";
 gameScreen.appendChild(narratorDisplay);
 
