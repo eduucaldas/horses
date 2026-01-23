@@ -157,6 +157,21 @@ function startGame(): void {
     }
   });
 
+  // Check for start parameter in URL (e.g., ?start=5)
+  const urlParams = new URLSearchParams(window.location.search);
+  const startFrom = parseInt(urlParams.get("start") || "0", 10);
+
+  if (startFrom > 0) {
+    // Advance narrator and apply effects up to the starting point
+    for (let i = 0; i < startFrom; i++) {
+      const line = narrator.advance();
+      if (line) {
+        game.applyEffect(line.effect);
+        applyVisualEffect(line.effect);
+      }
+    }
+  }
+
   game.start();
 }
 
