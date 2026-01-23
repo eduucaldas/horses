@@ -5,7 +5,8 @@
       "Bash(export NVM_DIR=\"$HOME/.nvm\")",
       "Bash(. \"$NVM_DIR/nvm.sh\")",
       "Bash(source \"$NVM_DIR/nvm.sh\")",
-      "Bash(gh run list:*)"
+      "Bash(gh run list:*)",
+      "Bash(ls:*)"
     ]
   }
 }

@@ -31,7 +31,7 @@ export class Game {
   private waitingForWallHit = false;
   private lastDirection: "up" | "down" | "left" | "right" | null = null;
 
-  constructor(container: HTMLElement, config: GameConfig, tickRate: number = 150) {
+  constructor(container: HTMLElement, config: GameConfig, tickRate: number = 250) {
     this.config = config;
     this.tickRate = tickRate;
     this.baseTickRate = tickRate;
@@ -254,16 +254,28 @@ export class Game {
 
   private spawnApple(): Position {
     const herdPositions = this.herd.getPositions();
+    const head = this.herd.getHead();
+    const minDistance = 4; // Minimum distance from horse head
     let position: Position;
+    let attempts = 0;
+    const maxAttempts = 100;
 
     do {
       position = {
         x: Math.floor(Math.random() * this.config.gridWidth),
         y: Math.floor(Math.random() * this.config.gridHeight),
       };
-    } while (this.isOccupied(position, herdPositions));
+      attempts++;
+    } while (
+      this.isOccupied(position, herdPositions) ||
+      (attempts <= maxAttempts && this.getDistance(position, head) < minDistance)
+    );
 
     return position;
+  }
+
+  private getDistance(a: Position, b: Position): number {
+    return Math.abs(a.x - b.x) + Math.abs(a.y - b.y);
   }
 
   private isOccupied(position: Position, occupied: Position[]): boolean {
