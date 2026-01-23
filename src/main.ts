@@ -54,8 +54,8 @@ gameWrapper.appendChild(flowersContainer);
 // Visual effect state
 let zoomLevel = 1;
 
-// Audio for the song
-const loviSong = new Audio("lovi-lovi-song.m4a");
+// Audio for the song (use base URL for GitHub Pages compatibility)
+const loviSong = new Audio(`${import.meta.env.BASE_URL}lovi-lovi-song.m4a`);
 loviSong.loop = true;
 
 function applyVisualEffect(effect: EffectType): void {
@@ -64,9 +64,8 @@ function applyVisualEffect(effect: EffectType): void {
 
   switch (effect) {
     case "play_song":
-      loviSong.play().catch(() => {
-        // Autoplay may be blocked, that's ok
-        console.log("Audio autoplay blocked - user interaction required");
+      loviSong.play().catch((err) => {
+        console.error("Audio playback failed:", err);
       });
       break;
     case "stop_song":
